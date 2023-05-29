@@ -1,0 +1,82 @@
+version: "3.9"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+      - VERSION=docker
+    volumes:
+      - ${CONFIG_PATH}/plex:/config:rw
+      - ${MEDIA_PATH}/TV:/tv:rw
+      - ${MEDIA_PATH}/Movies:/movies:rw
+      - ${MEDIA_PATH}/Music:/music:rw
+    restart: unless-stopped
+  sonarr:
+    container_name: sonarr
+    environment:
+      - PGID=${PGID}
+      - PUID=${PUID}
+      - TZ=America/New_York
+    image: linuxserver/sonarr
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_PATH}/sonarr:/config:rw
+      - ${MEDIA_PATH}:/Media:rw
+  radarr:
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    image: linuxserver/radarr
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    volumes:
+      - ${MEDIA_PATH}:/Media:rw
+      - ${CONFIG_PATH}/radarr:/config:rw
+  jackett:
+    container_name: jackett
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/New_York
+    image: linuxserver/jackett
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_PATH}/jackett:/config:rw
+  # delugevpn:
+  #   cap_add:
+  #     - NET_ADMIN
+  #   container_name: delugevpn
+  #   environment:
+  #     - STRICT_PORT_FORWARD=yes
+  #     - VPN_PROV=nordvpn
+  #     - VPN_ENABLED=yes
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - DEBUG=false
+  #     - VPN_USER=${VPN_USER}
+  #     - VPN_PASS=${VPN_PASS}
+  #     - VPN_CLIENT=openvpn
+  #     - ENABLE_PRIVOXY=yes
+  #     - LAN_NETWORK=0.0.0.0
+  #     - TZ=America/New_York
+  #   image: binhex/arch-delugevpn
+  #   ports:
+  #     - 58946:58946
+  #     - 8112:8112
+  #     - 8118:8118
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${CONFIG_PATH}/delugevpn:/config:rw
+  #     - ${MEDIA_PATH}:/Media:rw
+     
