@@ -53,30 +53,30 @@ services:
     restart: unless-stopped
     volumes:
       - ${CONFIG_PATH}/jackett:/config:rw
-  # delugevpn:
-  #   cap_add:
-  #     - NET_ADMIN
-  #   container_name: delugevpn
-  #   environment:
-  #     - STRICT_PORT_FORWARD=yes
-  #     - VPN_PROV=nordvpn
-  #     - VPN_ENABLED=yes
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #     - DEBUG=false
-  #     - VPN_USER=${VPN_USER}
-  #     - VPN_PASS=${VPN_PASS}
-  #     - VPN_CLIENT=openvpn
-  #     - ENABLE_PRIVOXY=yes
-  #     - LAN_NETWORK=0.0.0.0
-  #     - TZ=America/New_York
-  #   image: binhex/arch-delugevpn
-  #   ports:
-  #     - 58946:58946
-  #     - 8112:8112
-  #     - 8118:8118
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ${CONFIG_PATH}/delugevpn:/config:rw
-  #     - ${MEDIA_PATH}:/Media:rw
+  delugevpn:
+    cap_add:
+      - NET_ADMIN
+    container_name: delugevpn
+    environment:
+      - STRICT_PORT_FORWARD=yes
+      - VPN_PROV=nordvpn
+      - VPN_ENABLED=yes
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - DEBUG=false
+      - VPN_USER=${VPN_USER}
+      - VPN_PASS=${VPN_PASS}
+      - VPN_CLIENT=openvpn
+      - ENABLE_PRIVOXY=yes
+      - LAN_NETWORK=0.0.0.0
+      - TZ=America/New_York
+    image: binhex/arch-delugevpn
+    ports:
+      - 58946:58946
+      - 8112:8112
+      - 8118:8118
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_PATH}/delugevpn:/config:rw
+      - ${MEDIA_PATH}:/Media:rw
      
